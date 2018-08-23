@@ -44,12 +44,12 @@ public class WebhookLogic extends HttpLogic {
     public static WebhookLogic get() {
         return Container.getComp(WebhookLogic.class);
     }
-    
+
     /** webhookの状態：未送信（送信待ち） */
     public static final int WEBHOOK_STATUS_UNSENT = 0;
     /** webhookの状態：なんらかの通信エラーが発生した */
     public static final int WEBHOOK_STATUS_ERROR = -1;
-    
+
 
     /**
      * Webhookの実行
@@ -93,7 +93,7 @@ public class WebhookLogic extends HttpLogic {
         }
         LOG.info("Webhook sended. count: " + count);
     }
-    
+
     /**
      * WebHook通知クラスを取得
      * @param configEntity
@@ -115,12 +115,12 @@ public class WebhookLogic extends HttpLogic {
      * JSON生成のテンプレートを読み出す
      * @param configEntity
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     public String loadTemplate(WebhookConfigsEntity configEntity) throws Exception {
         return getWebHookNotification(configEntity).loadTemplate(configEntity);
     }
-    
+
     /**
      * 送信するJSONを生成する
      * @param entity
@@ -144,7 +144,7 @@ public class WebhookLogic extends HttpLogic {
         if (0 == entities.size()) {
             return hooks;
         }
-        
+
         // TODO 後でリファクタリング（WebHookの種類を追加する毎に、ロジックを修正しなくてはいけなくて面倒）
         List<WebhookConfigsEntity> knowledgeHooks = new ArrayList<WebhookConfigsEntity>();
         List<WebhookConfigsEntity> commentHooks = new ArrayList<WebhookConfigsEntity>();
@@ -170,8 +170,8 @@ public class WebhookLogic extends HttpLogic {
 
         return hooks;
     }
-    
-    
+
+
     /**
      * 通知を送る
      *
@@ -182,6 +182,7 @@ public class WebhookLogic extends HttpLogic {
      */
     public void notify(ProxyConfigsEntity proxyConfig, WebhookConfigsEntity webhookConfig, String json) throws Exception {
         URI uri = new URI(webhookConfig.getUrl());
+
 
         // HttpClient生成
         if (Flag.is(webhookConfig.getIgnoreProxy())) {
